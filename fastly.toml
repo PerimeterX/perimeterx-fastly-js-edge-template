@@ -1,0 +1,55 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = [""]
+description = "A simple template demonstrating basic usage of the PerimeterX/Human Security Fastly JS Edge library"
+language = "javascript"
+manifest_version = 2
+name = "perimeterx-fastly-js-edge-template"
+service_id = ""
+
+[scripts]
+  build = "npm run build"
+
+[setup]
+
+  [setup.backends]
+
+    [setup.backends.origin]
+      address = "{{origin}}"
+      description = "The origin server"
+
+    [setup.backends.human_sapi]
+      address = "https://sapi-{{app_id}}.perimeterx.net"
+      description = "The Human Score API backend"
+
+    [setup.backends.human_collector]
+      address = "https://collector-{{app_id}}.perimeterx.net"
+      description = "The Human Collector backend"
+
+    [setup.backends.human_client]
+      address = "https://client.perimeterx.net"
+      description = "The Human backend that serves the client sensor"
+
+    [setup.backends.human_captcha]
+      address = "https://captcha.px-cdn.net"
+      description = "The Human backend that serves the captcha script"
+
+[local_server]
+
+  [local_server.backends]
+
+    [local_server.backends.origin]
+      url = "{{origin}}"
+
+    [local_server.backends.human_sapi]
+      url = "https://sapi-{{app_id}}.perimeterx.net"
+
+    [local_server.backends.human_collector]
+      url = "https://collector-{{app_id}}.perimeterx.net"
+
+    [local_server.backends.human_client]
+      url = "https://client.perimeterx.net"
+
+    [local_server.backends.human_captcha]
+      url = "https://captcha.px-cdn.net"
