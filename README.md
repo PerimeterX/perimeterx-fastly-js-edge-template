@@ -113,6 +113,7 @@ match the configured `px_s2s_timeout`.
 * [Deploying to Fastly](https://deploy.edgecompute.app/deploy)
 * [Using Compute@Edge JavaScript](https://developer.fastly.com/learning/compute/javascript/)
 * [Migrating from VCL](https://developer.fastly.com/learning/compute/migrate/)
+* [Fastly TOML Format](https://developer.fastly.com/reference/compute/fastly-toml/)
 * [Fastly Developer Hub](https://developer.fastly.com/solutions/starters)
 * [The `@fastly/js-compute` Package](https://www.npmjs.com/package/@fastly/js-compute)
 
