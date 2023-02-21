@@ -56,7 +56,10 @@ this backend at all; however, it is used in the `src/index.js` file to pass the 
 
 You will need to create four additional backends (called "hosts" on the Fastly website) so that the library can function
 properly. Some of these backend URLs depend on the application ID (e.g., `PX12345678`), so make sure to adjust these values
-appropriately in the TOML file. The backends are:
+appropriately in the TOML file (under the `setup` section for deployments to Fastly, and under the `local_server` section
+for local testing).
+
+The backends are:
 
 | Backend Name      | Sample Backend URL                         | Description                  |
 |:---               |:---                                        |:---                          |
@@ -66,7 +69,38 @@ appropriately in the TOML file. The backends are:
 | human_captcha     | https://captcha.px-cdn.net                 | The Human backend that serves the captcha script |
 
 > Note: The names and URLs of these backends are crucial for the enforcer to work properly. If the names of these backends
-> differ from the default values, they must be explicitly specified in the enforcer configuration.
+> differ from the default values, they must be explicitly specified in the enforcer configuration params.
+
+Ultimately, the only values that need to be changed in the `fastly.toml` are those with {{double curly braces}} surrounding them.
+This will be the origin backend (denoted by `{{origin}}`), and the URLs of `human_` backends that require the application ID
+(e.g., `https://collector-{{app_id}}.perimeterx.net`).
+
+If the default `human_*` backend names are changed, these backend names must be explicitly indicated in the Enforcer configuration.
+See the example below. Note that the `{{app_id}}` in the URL is replaced with the true value, and that since the name of the
+backend is different from the default, it has been explicitly specified in the configuration params.
+
+```toml
+# fastly.toml
+
+[setup]
+    [setup.backends]
+        [setup.backends.human_collector_backend]
+            address = "https://collector-PX123ABCDE.perimeterx.net"
+            description = "The Human Collector backend"
+```
+
+```ts
+// config.ts
+
+export const config: ConfigurationParams = {
+    px_app_id: 'PX123ABCDE',
+    // ...
+    px_backend_collector_name: 'human_collector_backend'
+};
+```
+
+Once the backends are added to the Fastly Service, be sure to set the `first_byte_timeout` of the human_sapi backend to
+match the configured `px_s2s_timeout`.
 
 ## Helpful PerimeterX/Human Security Links
 
