@@ -15,8 +15,16 @@ module.exports = {
   },
   module: {
     rules: [
-      // Loaders go here.
-      // e.g., ts-loader for TypeScript
+      {
+        test: /\.m?js/,
+        type: "javascript/auto",
+      },
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
     ],
   },
   plugins: [

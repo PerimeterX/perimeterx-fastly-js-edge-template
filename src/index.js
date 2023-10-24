@@ -1,28 +1,21 @@
 /// <reference types="@fastly/js-compute" />
+import { createEnforcedRequestHandler } from "perimeterx-fastly-js-edge";
 
-import { Enforcer } from "perimeterx-fastly-js-edge";
-import { configs } from './config';
+// define HUMAN configuration
+const params = {
+    px_app_id: '',
+    px_cookie_secret: '',
+    px_auth_token: '',
+};
 
+// define what to do when requests pass HUMAN enforcement
+const onPass = (event) => {
+    // Add your event handling logic here, for example:
+    // return fetch(event.request, { backend: 'origin' });
+};
+
+// create request handler with configuration and onPass callback
+const handleRequest = createEnforcedRequestHandler(params, onPass);
+
+// invoke handleRequest on incoming fetch event
 addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
-
-async function handleRequest(event) {
-    // create enforcer with configuration
-    const enforcer = Enforcer.createFromParams(configs);
-
-    // await enforcement
-    const retVal = await enforcer.enforce(event);
-
-    // return enforcer response (first party or block)
-    if (retVal instanceof Response) {
-        return retVal;
-    }
-
-    // send request to origin
-    let res = await fetch(retVal, { backend: 'origin' });
-
-    // perform any necessary post-processing overriding response
-    res = await enforcer.postEnforce(retVal, res, event);
-
-    // return response
-    return res;
-}
