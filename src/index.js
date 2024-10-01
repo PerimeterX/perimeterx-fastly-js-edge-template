@@ -11,7 +11,7 @@ const params = {
 // define what to do when requests pass HUMAN enforcement
 const onPass = (event) => {
     // Add your event handling logic here, for example:
-    // return fetch(event.request, { backend: 'origin' });
+    return fetch(event.request, { backend: 'origin' });
 };
 
 // create request handler with configuration and onPass callback

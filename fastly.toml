@@ -20,19 +20,19 @@ service_id = ""
       description = "The origin server"
 
     [setup.backends.human_sapi]
-      address = "https://sapi-{{app_id}}.perimeterx.net"
+      address = "sapi-{{app_id}}.perimeterx.net"
       description = "The Human Score API backend"
 
     [setup.backends.human_collector]
-      address = "https://collector-{{app_id}}.perimeterx.net"
+      address = "collector-{{app_id}}.perimeterx.net"
       description = "The Human Collector backend"
 
     [setup.backends.human_client]
-      address = "https://client.perimeterx.net"
+      address = "client.perimeterx.net"
       description = "The Human backend that serves the client sensor"
 
     [setup.backends.human_captcha]
-      address = "https://captcha.px-cdn.net"
+      address = "captcha.px-cdn.net"
       description = "The Human backend that serves the captcha script"
 
 [local_server]
